@@ -1,6 +1,7 @@
 import express from "express";
 import pool from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
+import { verifyToken } from "./middleware/auth.middleware.js";
 
 const app = express();
 
@@ -98,6 +99,12 @@ app.get("/users", async (req,res) => {
         });
     }
 
+});
+
+app.get("/test", verifyToken, (req, res) => {
+    res.json({
+        message: "Protected Route Working"
+    });
 });
 
 app.listen(5000, () => {
