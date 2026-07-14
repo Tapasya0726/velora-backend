@@ -12,9 +12,9 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     university VARCHAR(255) NOT NULL,
-    major VARCHAR(255) NOT NULL,
+    major VARCHAR(255),
     year INTEGER NOT NULL CHECK (year BETWEEN 1 AND 4),
-    graduation_year INTEGER NOT NULL,
+    graduation_year INTEGER,
     profile_photo TEXT,
     streak INTEGER DEFAULT 0
 );

@@ -1,6 +1,7 @@
 import express from "express";
 import pool from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
+import taskRoutes from "./routes/task.routes.js";
 import { verifyToken } from "./middleware/auth.middleware.js";
 
 const app = express();
@@ -15,6 +16,7 @@ const logger = (req,res,next) => {
 app.use(logger);
 
 app.use(authRoutes);
+app.use("/tasks", taskRoutes);
 
 app.post("/tasks", (req,res) => {
     if (!req.body.title){
@@ -43,20 +45,6 @@ app.get("/", (req, res) => {
 
 app.get("/dashboard", (req, res) => {
     res.send("Dashboard Data");
-});
-
-app.get("/tasks", (req, res) => {
-    res.status(200).json([
-        {id: 1,
-            title: "Complete Backend",
-            priority: "High"
-        },
-        {
-            id: 2,
-            title: "Go to Gym",
-            priority: "Medium"
-        }
-    ]);
 });
 
 app.get("/notes", (req,res) => {
