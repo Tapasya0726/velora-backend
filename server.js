@@ -1,10 +1,13 @@
 import express from "express";
+import cors from "cors";
 import pool from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import taskRoutes from "./routes/task.routes.js";
+/*import noteRoutes from "./routes/note.routes.js";*/
 import { verifyToken } from "./middleware/auth.middleware.js";
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 

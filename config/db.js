@@ -1,7 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import {Pool} from "pg";
+import pg from "pg";
+
+const { Pool, types } = pg;
+
+types.setTypeParser(1082, (value) => value);
 
 console.log("DB_USER:", process.env.DB_USER);
 console.log("DB_NAME:", process.env.DB_NAME);
