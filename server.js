@@ -3,7 +3,7 @@ import cors from "cors";
 import pool from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import taskRoutes from "./routes/task.routes.js";
-/*import noteRoutes from "./routes/note.routes.js";*/
+import noteRoutes from "./routes/note.routes.js";
 import { verifyToken } from "./middleware/auth.middleware.js";
 
 const app = express();
@@ -20,27 +20,7 @@ app.use(logger);
 
 app.use(authRoutes);
 app.use("/tasks", taskRoutes);
-
-app.post("/tasks", (req,res) => {
-    if (!req.body.title){
-        return res.status(400).json({
-            message:"title is required"
-        });
-    }
-    res.status(201).json({
-        message:"task created successfully"
-    })
-});
-
-app.put("/tasks/:id", (req,res) => {
-    console.log(req.params.id);
-    res.send("Task Updated");
-});
-
-app.delete("/tasks/:id", (req,res) => {
-    console.log(req.params.id);
-    res.status(204).send();
-});
+app.use("/api/notes", noteRoutes);
 
 app.get("/", (req, res) => {
     res.send("Welcome to Velora Backend!");
@@ -48,10 +28,6 @@ app.get("/", (req, res) => {
 
 app.get("/dashboard", (req, res) => {
     res.send("Dashboard Data");
-});
-
-app.get("/notes", (req,res) => {
-    res.send("All Notes");
 });
 
 app.get("/focus", (req,res) => {
