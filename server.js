@@ -4,6 +4,8 @@ import pool from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import taskRoutes from "./routes/task.routes.js";
 import noteRoutes from "./routes/note.routes.js";
+import focusRoutes from "./routes/focus.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
 import { verifyToken } from "./middleware/auth.middleware.js";
 
 const app = express();
@@ -21,6 +23,8 @@ app.use(logger);
 app.use(authRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/api/notes", noteRoutes);
+app.use("/focus", focusRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 app.get("/", (req, res) => {
     res.send("Welcome to Velora Backend!");
