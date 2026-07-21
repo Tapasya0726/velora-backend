@@ -12,11 +12,12 @@ console.log("DB_NAME:", process.env.DB_NAME);
 console.log("DB_HOST:", process.env.DB_HOST);
 
 const pool = new Pool({
-    host:process.env.DB_HOST,
-    port:Number(process.env.DB_PORT),
-    database:process.env.DB_NAME,
-    user:process.env.DB_USER,
-    password:process.env.DB_PASSWORD
+    connectionString: process.env.DATABASE_URL || undefined,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
 });
 
 pool.connect()
