@@ -7,6 +7,10 @@ import noteRoutes from "./routes/note.routes.js";
 import focusRoutes from "./routes/focus.routes.js";
 import dashboardRoutes from "./routes/dashboard.routes.js";
 import applicationRoutes from "./routes/application.routes.js";
+import skillRoutes from "./routes/skills.routes.js";
+import resumeRoutes from "./routes/resume.routes.js";
+import projectRoutes from "./routes/project.routes.js";
+import educationRoutes from "./routes/education.routes.js";
 import { verifyToken } from "./middleware/auth.middleware.js";
 
 const app = express();
@@ -27,25 +31,14 @@ app.use("/api/notes", noteRoutes);
 app.use("/focus", focusRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/applications", applicationRoutes);
+app.use("/skills", skillRoutes);
+app.use("/resume", resumeRoutes);
+app.use("/resume/projects", projectRoutes);
+app.use("/resume/education", educationRoutes);
+
 
 app.get("/", (req, res) => {
     res.send("Welcome to Velora Backend!");
-});
-
-app.get("/dashboard", (req, res) => {
-    res.send("Dashboard Data");
-});
-
-app.get("/focus", (req,res) => {
-    res.send("Focus Data");
-});
-
-app.get("/applications", (req,res) => {
-    res.send("All Applications");
-});
-
-app.get("/resume", (req,res) => {
-    res.send("Resume Data");
 });
 
 app.get("/roadmap", (req,res) => {
