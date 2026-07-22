@@ -1,5 +1,31 @@
 import pool from "../config/db.js";
 
+const getOrCreateResumeId = async (userId) => {
+    const existingResume = await pool.query(
+        `
+        SELECT resume_id
+        FROM resume
+        WHERE user_id = $1;
+        `,
+        [userId]
+    );
+
+    if (existingResume.rows.length > 0) {
+        return existingResume.rows[0].resume_id;
+    }
+
+    const createdResume = await pool.query(
+        `
+        INSERT INTO resume (user_id)
+        VALUES ($1)
+        RETURNING resume_id;
+        `,
+        [userId]
+    );
+
+    return createdResume.rows[0].resume_id;
+};
+
 export const createEducation = async (req, res) => {
 
     try {
@@ -14,24 +40,7 @@ export const createEducation = async (req, res) => {
             end_year
         } = req.body;
 
-        const resumeResult = await pool.query(
-            `
-            SELECT resume_id
-            FROM resume
-            WHERE user_id = $1;
-            `,
-            [userId]
-        );
-
-        if (resumeResult.rows.length === 0) {
-
-            return res.status(404).json({
-                message: "Resume not found."
-            });
-
-        }
-
-        const resumeId = resumeResult.rows[0].resume_id;
+        const resumeId = await getOrCreateResumeId(userId);
 
         const result = await pool.query(
             `
