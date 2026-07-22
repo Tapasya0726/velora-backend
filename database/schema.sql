@@ -256,6 +256,7 @@ ALTER SEQUENCE public.projects_project_id_seq OWNED BY public.projects.project_i
 CREATE TABLE public.resources (
     resource_id integer NOT NULL,
     user_id integer NOT NULL,
+    roadmap_type character varying(100) NOT NULL,
     title character varying(255) NOT NULL,
     type character varying(100) NOT NULL,
     category character varying(100) NOT NULL,
@@ -337,6 +338,7 @@ ALTER SEQUENCE public.resume_resume_id_seq OWNED BY public.resume.resume_id;
 CREATE TABLE public.roadmap_items (
     roadmap_item_id integer NOT NULL,
     user_id integer NOT NULL,
+    roadmap_type character varying(100) NOT NULL,
     title character varying(255) NOT NULL,
     duration character varying(100) NOT NULL,
     status character varying(100) NOT NULL,

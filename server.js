@@ -11,6 +11,7 @@ import skillRoutes from "./routes/skills.routes.js";
 import resumeRoutes from "./routes/resume.routes.js";
 import projectRoutes from "./routes/project.routes.js";
 import educationRoutes from "./routes/education.routes.js";
+import roadmapRoutes from "./routes/roadmap.routes.js";
 import { verifyToken } from "./middleware/auth.middleware.js";
 
 const app = express();
@@ -35,22 +36,10 @@ app.use("/skills", skillRoutes);
 app.use("/resume", resumeRoutes);
 app.use("/resume/projects", projectRoutes);
 app.use("/resume/education", educationRoutes);
-
+app.use("/roadmap", roadmapRoutes);
 
 app.get("/", (req, res) => {
     res.send("Welcome to Velora Backend!");
-});
-
-app.get("/roadmap", (req,res) => {
-    res.send("Roadmap Data");
-});
-
-app.get("/analytics", (req,res) => {
-    res.send("Analytics Data");
-});
-
-app.get("/settings", (req,res) => {
-    res.send("Settings Data");
 });
 
 app.get("/users", async (req,res) => {
