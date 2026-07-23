@@ -165,16 +165,96 @@ export const getRoadmap = async (req, res) => {
 
         if (roadmapItems.rows.length === 0) {
 
-            return res.status(200).json({
+    const roadmapType = "Full Stack Developer";
 
-                roadmapType: null,
-                progress: 0,
-                roadmapItems: [],
-                resources: []
+    const roadmap = ROADMAP_TEMPLATES[roadmapType];
 
-            });
+    for (const item of roadmap) {
 
-        }
+        await pool.query(
+            `
+            INSERT INTO roadmap_items
+            (
+                user_id,
+                roadmap_type,
+                title,
+                duration,
+                status
+            )
+            VALUES
+            (
+                $1,$2,$3,$4,$5
+            );
+            `,
+            [
+                userId,
+                roadmapType,
+                item.title,
+                item.duration,
+                "Pending"
+            ]
+        );
+
+        await pool.query(
+            `
+            INSERT INTO resources
+            (
+                user_id,
+                roadmap_type,
+                title,
+                type,
+                category,
+                link
+            )
+            VALUES
+            (
+                $1,$2,$3,$4,$5,$6
+            );
+            `,
+            [
+                userId,
+                roadmapType,
+                item.resourceTitle,
+                item.resourceType,
+                roadmapType,
+                item.resourceLink
+            ]
+        );
+    }
+
+    // Fetch the roadmap again
+    const newRoadmapItems = await pool.query(
+        `
+        SELECT *
+        FROM roadmap_items
+        WHERE user_id = $1
+        ORDER BY roadmap_item_id;
+        `,
+        [userId]
+    );
+
+    const newResources = await pool.query(
+        `
+        SELECT
+            resource_id,
+            title,
+            type,
+            category,
+            link
+        FROM resources
+        WHERE user_id = $1
+        AND roadmap_type = $2;
+        `,
+        [userId, roadmapType]
+    );
+
+    return res.status(200).json({
+        roadmapType,
+        progress: 0,
+        roadmapItems: newRoadmapItems.rows,
+        resources: newResources.rows
+    });
+}
 
         const roadmapType = roadmapItems.rows[0].roadmap_type;
 
