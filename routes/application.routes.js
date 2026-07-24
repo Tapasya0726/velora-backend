@@ -1,7 +1,7 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth.middleware.js";
 import { addApplication , getApplications , updateApplication, deleteApplication, getApplicationStats } from "../controllers/application.controller.js";
-console.log("Application routes loaded");
+// console.log("Application routes loaded");
 const router = express.Router();
 
 router.post("/", verifyToken, addApplication);

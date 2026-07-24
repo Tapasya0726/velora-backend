@@ -298,7 +298,7 @@ export const getTopSkills = async (req, res) => {
             [userId]
         );
 
-        console.log("Rows:", result.rows);
+        // console.log("Rows:", result.rows);
 
         res.status(200).json(result.rows);
 

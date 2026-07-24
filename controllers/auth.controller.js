@@ -106,7 +106,7 @@ export const login = async (req,res) => {
         user.rows[0].password
     );
 
-    console.log(isPasswordCorrect);
+    // console.log(isPasswordCorrect);
 
     if (!isPasswordCorrect) {
         return res.status(400).json({
